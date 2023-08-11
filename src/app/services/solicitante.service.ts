@@ -15,6 +15,9 @@ export class SolicitanteService {
   get(page:number=0,elements:number=5): Observable<ISolicitante> {
     return this.http.get<ISolicitante>(`${this.apiUrl}?page=${page}&elements=${elements}`);
   }
+  getByName(name:string): Observable<ISolicitanteData[]>{
+    return this.http.get<ISolicitanteData[]>(`${this.apiUrl}/name?nombre=${name}`);
+  }
 
   create(solicitante: ISolicitanteData): Observable<ISolicitanteData> {
     return this.http.post<ISolicitanteData>(this.apiUrl, solicitante);

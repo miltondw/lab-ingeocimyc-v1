@@ -10,8 +10,8 @@ import { ProjectService } from '@app/services/project.service'
   styleUrls: ['./list-projects.component.sass']
 })
 export class ListProjectsComponent implements AfterViewInit {
-  displayedColumns: string[] = ['title', 'location', 'reference', 'probes', 'user_id', 'solicitante_id'];
-  itemsList = [['title', 'Titulo'], ['location', 'Ubicación'], ['reference', 'Referencia'], ['probes', 'Sondeos'], ['user_id', 'Usuario'], ['solicitante_id', 'Solicitante']]
+  displayedColumns: string[] = ['title', 'location', 'reference', 'probes', 'user_id', 'solicitante_id','date'];
+  itemsList = [['title', 'Titulo'], ['location', 'Ubicación'], ['reference', 'Referencia'], ['probes', 'Sondeos'], ['user_id', 'Usuario'], ['solicitante_id', 'Solicitante'],['date','Fecha']]
   projects: IProjectData[] = [];
   dataSource: MatTableDataSource<IProjectData>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;

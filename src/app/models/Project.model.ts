@@ -3,9 +3,10 @@ export interface IProjectData {
   title: string,
   location:string
   reference:string
-  probes: number
+  probes?: number
   user_id:string
   solicitante_id:string
+  date?:Date
 }
 export interface IApi{
   pageable: {
