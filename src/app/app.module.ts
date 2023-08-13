@@ -49,17 +49,19 @@ import { FormCreateSolicitanteComponent } from './components/forms/form-create-s
 import { ListProjectsComponent } from './components/lists/list-projects/list-projects.component';
 import { ListSolicitantesComponent } from './components/lists/list-solicitantes/list-solicitantes.component';
 import { ListUsersComponent } from './components/lists/list-users/list-users.component';
-
 /**
- * * Pages
+ * * Ensayos
 */
-import { CreateProjectComponent } from './pages/create-project/create-project.component';
-import { CreateSolicitanteComponent } from './pages/create-solicitante/create-solicitante.component';
 import { HeaderComponent } from './components/ensayos/header/header.component';
 import { EnsayoGranulometriaComponent } from './components/ensayos/ensayo-granulometria/ensayo-granulometria.component';
 import { EnsayoPlasticoComponent } from './components/ensayos/ensayo-plastico/ensayo-plastico.component';
 import { EnsayoLiquidoComponent } from './components/ensayos/ensayo-liquido/ensayo-liquido.component';
 import { EnsayoHumedadComponent } from './components/ensayos/ensayo-humedad/ensayo-humedad.component';
+/**
+ * * Pages
+*/
+import { CreateProjectComponent } from './pages/create-project/create-project.component';
+import { CreateSolicitanteComponent } from './pages/create-solicitante/create-solicitante.component';
 import { EnsayoComponent } from './pages/ensayo/ensayo.component';
 
 

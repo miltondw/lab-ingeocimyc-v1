@@ -1,0 +1,101 @@
+import { Component } from '@angular/core';
+import { ELEMENT_DATA } from './data'
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { IEnsayoGranulometriaDTO } from '@app/models/ensayos/Granulometria.model'
+import { GranulometriaService } from '@app/services/ensayos/granulometria.service'
+import { RouterStateService } from '@app/services/router-state.service'
+
+@Component({
+  selector: 'app-ensayo-granulometria',
+  templateUrl: './ensayo-granulometria.component.html',
+  styleUrls: ['./ensayo-granulometria.component.sass']
+})
+
+export class EnsayoGranulometriaComponent {
+  displayedColumns: string[] = [
+    'pulgada',
+    'mm',
+    'gr'
+  ];
+  dataSource = ELEMENT_DATA;
+  values: IEnsayoGranulometriaDTO | any = {}
+  form: FormGroup = new FormGroup({});
+  idMuestra: string | null = null;
+  edit:boolean=false;
+  new:boolean=true;
+  constructor (
+    private fb: FormBuilder,
+    private granulometriaService: GranulometriaService,
+    private routerStateService: RouterStateService
+  ) {
+    this.buildForm()
+  }
+  ngOnInit(): void {
+    this.routerStateService.muestraProject$.subscribe({
+      next: (id) => {
+        id && this.granulometriaService.get(id).subscribe({
+          next: (data) => {
+            if(typeof data?.tamices === 'string' && data?.tamices){
+              this.form.patchValue(JSON.parse(data.tamices))
+              this.edit=true;
+              this.values.tamices = this.form.value
+              this.values.muestra_id=id;
+              this.new=false;
+            }
+          },
+          error: (error) => {
+            console.error('Error al obtener solicitante:', error);
+          }
+        });
+      },
+      error: (error) => {
+        console.error('Error al obtener solicitante:', error);
+      }
+    });
+  }
+  private buildForm() {
+    this.form = this.fb.group({
+      inches2: [''],
+      inches1: [''],
+      inches34: ['',],
+      inches12: [''],
+      inches38: [''],
+      inchesN4: [''],
+      inchesN10: [''],
+      inchesN40: [''],
+      inchesN200: [''],
+      inchesP200: ['']
+    });
+  }
+
+  onSubmit() {
+    if (this.form.valid) {
+      this.values.tamices = this.form.value
+      this.values.muestra_id=this.idMuestra;
+      for (let propiedad in this.values.tamices) {
+        if (this.values.tamices[propiedad] === null) {
+           this.values.tamices[propiedad] = 0;
+        }
+      }
+      if(this.new){
+      this.granulometriaService.create(this.values).subscribe({
+        next: (data) => {
+          this.edit=true
+        },
+        error: (error) => {
+          console.error('Error al obtener solicitante:', error);
+        }
+      });
+      } else {
+        console.log(this.values)
+      }
+    this.edit=true;
+    } else {
+      this.form.markAllAsTouched()
+    }
+  }
+  activeEdit(){
+    this.edit=false
+  }
+
+}

@@ -21,7 +21,7 @@ body
   .mat-mdc-form-field
     display: -webkit-inline-box !important
     margin: 0.5rem 0 !important
-    width: 135px !important
+    //width: 135px !important
 
 .footer
   .observaciones
@@ -68,3 +68,26 @@ td
   &:active
     transform: scale(0.9)
     transition: 600ms transform
+
+.titles
+  display: grid
+  justify-content: space-around
+  border-bottom: 1px solid #9f9f9f
+  grid-template-columns: 1fr 1fr
+  gap: 2rem
+
+  h3:first-child
+    border-right: 1px solid #9f9f9f
+    margin: 0
+    display: flex
+    place-items: center
+    place-content: center
+
+.content-ensayo
+  .mat-mdc-form-field
+    margin-top: 10px
+    height: 70px
+  td.mat-mdc-cell.mdc-data-table__cell.cdk-cell.cdk-column-prueba.mat-column-prueba.ng-star-inserted
+    width: 30% !important
+  .mat-mdc-form-field
+    max-width: 130px

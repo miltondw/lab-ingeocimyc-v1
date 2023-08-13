@@ -5,6 +5,7 @@ import { CreateProjectComponent } from './pages/create-project/create-project.co
 import { CreateSolicitanteComponent } from './pages/create-solicitante/create-solicitante.component';
 import { ListSolicitantesComponent } from './components/lists/list-solicitantes/list-solicitantes.component';
 import { ListProjectsComponent } from './components/lists/list-projects/list-projects.component';
+import { EnsayoComponent } from './pages/ensayo/ensayo.component';
 const routes: Routes = [
   {
     path: '',
@@ -30,6 +31,10 @@ const routes: Routes = [
       {
         path:'lab/list/proyectos',
         component:ListProjectsComponent
+      },
+      {
+        path:'lab/ensayo/:id',
+        component:EnsayoComponent
       }
   ]
   }
