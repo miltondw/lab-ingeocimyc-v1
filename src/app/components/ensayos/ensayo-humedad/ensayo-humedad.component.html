@@ -8,28 +8,25 @@
           {{ element.prueba }}
         </td>
       </ng-container>
-      <ng-container
-        *ngFor="let item of stringValues"
-        [matColumnDef]="item"
-        [formGroupName]="item"
-      >
+      <ng-container matColumnDef="primera">
         <th mat-header-cell *matHeaderCellDef>M1</th>
-
         <td mat-cell *matCellDef="let element">
-          <ng-container *ngIf="element.primera == 'depthM'; else formHumedad">
-            <div [formGroupName]="element.primera">
+          <ng-container *ngIf="element.primera == 'depth'; else formHumedad">
+            <p *ngIf="edit" > {{values.depth.de}}-{{values.depth.hasta}} </p>
+            <div [formGroupName]="element.primera" *ngIf="!edit">
               <mat-form-field style="width: 40%; margin-right: 10px;" appearance="outline">
                 <mat-label>De</mat-label>
-                <input matInput formControlName="de" />
+                <input matInput  type="number" formControlName="de" />
               </mat-form-field>
               <mat-form-field appearance="outline" style="width: 40%;">
                 <mat-label>Hasta</mat-label>
-                <input matInput formControlName="hasta" />
+                <input matInput  type="number" formControlName="hasta" />
               </mat-form-field>
             </div>
           </ng-container>
           <ng-template #formHumedad>
-            <mat-form-field appearance="outline">
+           <p *ngIf="edit" > {{values[element.primera]}} </p>
+            <mat-form-field appearance="outline" *ngIf="!edit">
               <mat-label>{{ element.prueba }}</mat-label>
               <input
                 matInput
@@ -51,18 +48,26 @@
           src="/assets/cilindro.svg"
           alt="cilindro"
         />
-        <div formGroupName="cylinder">
+        <p *ngIf="edit">
+          Diámetro: {{values.cylinder?values.cylinder[0]:0}} Altura: {{values.cylinder?values.cylinder[1]:0}}
+        </p>
+        <div formGroupName="cylinder" *ngIf="!edit" >
           <mat-form-field appearance="outline">
             <mat-label>Diámetro</mat-label>
-            <input matInput formControlName="diameter" />
+            <input matInput formControlName="diameter"  type="number" />
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Altura</mat-label>
-            <input matInput formControlName="height" />
+            <input matInput formControlName="height"  type="number"  />
           </mat-form-field>
         </div>
       </div>
     </div>
-    <button class="btn_primary" (click)="onSubmit()">Guardar</button>
+    <button class="btn_primary"  (click)="onSubmit()" *ngIf="!edit">
+      Guardar
+    </button>
+     <button class="btn_primary"  (click)="activeEdit()" *ngIf="edit">
+         editar
+      </button>
   </form>
 </div>

@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { ELEMENT_DATA } from './data'
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { RouterStateService } from '@app/services/router-state.service'
+import { LiquidoService } from '@app/services/ensayos/liquido.service'
+import {ILiquido} from '@app/models/ensayos/Liquido.model'
 @Component({
   selector: 'app-ensayo-liquido',
   templateUrl: './ensayo-liquido.component.html',
@@ -15,9 +18,12 @@ export class EnsayoLiquidoComponent {
   ];
   dataSource = ELEMENT_DATA;
   form: FormGroup = new FormGroup({});
-  values:any = {};
+  values:ILiquido[]|any = [];
+  datos:ILiquido[]|any = [];
   stringValues = ["primera", "segunda", "tercera"]
-
+  muestra_id:string='1'
+  edit=false
+  new=true
   initialValues = {
     number_of_strokes: [''],
     tare_number: [''],
@@ -30,9 +36,38 @@ export class EnsayoLiquidoComponent {
   }
   constructor (
     private fb: FormBuilder,
-
+    private liquidoService: LiquidoService,
+    private routerStateService: RouterStateService
   ) {
     this.buildForm()
+  }
+  ngOnInit(): void {
+    this.routerStateService.muestraProject$.subscribe({
+      next: (id) => {
+        id && this.liquidoService.get(id).subscribe({
+          next: (data) => {
+            this.datos=data
+            this.muestra_id=id
+            const liquido={primera:{},segunda:{},tercera:{}}
+            if(this.datos[0]){
+            liquido.primera=this.datos[this.datos[0].numero_prueba-1]
+            liquido.segunda=this.datos[this.datos[1].numero_prueba-1]
+            liquido.tercera=this.datos[this.datos[2].numero_prueba-1]
+            this.form.patchValue(liquido)
+            this.values=liquido
+            this.new=false;
+            this.edit=true;
+          }
+          },
+          error: (error) => {
+            console.error('Error :', error);
+          }
+        });
+      },
+      error: (error) => {
+        console.error('Error :', error);
+      }
+    });
   }
 
   private buildForm() {
@@ -46,11 +81,36 @@ export class EnsayoLiquidoComponent {
     if (this.form.valid) {
       this.values = this.form.value
       if (this.values) {
-        console.log(this.values)
+        this.values.primera.muestra_id=this.muestra_id
+        this.values.primera.numero_prueba=1
+        this.values.segunda.muestra_id=this.muestra_id
+        this.values.segunda.numero_prueba=2
+        this.values.tercera.muestra_id=this.muestra_id
+        this.values.tercera.numero_prueba=3
+        const liquidoDto=[]
+        liquidoDto.push(this.values.primera,this.values.segunda,this.values.tercera)
+       if(this.new){
+         liquidoDto.map(liquido=>{
+        this.liquidoService.create(liquido).subscribe({
+            next: () => {
+            this.edit = true
+            },
+             error: (error) => {
+               console.error('Error :', error);
+             }
+           });
+           })
+       }else{
+        this.edit = true
+        console.log("update",liquidoDto)
+       }
       }
     } else {
       this.form.markAllAsTouched()
     }
+  }
+  activeEdit() {
+    this.edit = false
   }
 
 }

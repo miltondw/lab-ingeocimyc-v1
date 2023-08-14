@@ -13,7 +13,7 @@ export class PlasticoService {
 
   constructor (private http: HttpClient) { }
 
-  get(idMuestra: number): Observable<IPlastico> {
+  get(idMuestra: string): Observable<IPlastico> {
     return this.http.get<IPlastico>(
       `${this.apiUrl}?&muestraId=${idMuestra}`
     );

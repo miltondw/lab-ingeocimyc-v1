@@ -13,8 +13,8 @@ export class LiquidoService {
 
   constructor (private http: HttpClient) { }
 
-  get(idMuestra: number): Observable<ILiquido> {
-    return this.http.get<ILiquido>(
+  get(idMuestra: string): Observable<ILiquido[]> {
+    return this.http.get<ILiquido[]>(
       `${this.apiUrl}?&muestraId=${idMuestra}`
     );
   }

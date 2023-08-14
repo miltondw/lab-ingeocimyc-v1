@@ -18,8 +18,8 @@
         <th mat-header-cell *matHeaderCellDef>gr</th>
         <td mat-cell *matCellDef="let element">
           <p *ngIf="edit">
-            {{values.tamices[element.gr]?values.tamices[element.gr]:values.tamices[element.gr]=0}}
-          </p> 
+            {{values.tamices[element.gr]?values.tamices[element.gr]:0}}
+          </p>
           <mat-form-field appearance="outline" *ngIf="!edit" >
             <mat-label>Gr</mat-label>
             <input type="number" matInput [formControlName]="element.gr">

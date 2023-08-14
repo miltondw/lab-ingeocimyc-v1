@@ -20,9 +20,9 @@ export class EnsayoGranulometriaComponent {
   dataSource = ELEMENT_DATA;
   values: IEnsayoGranulometriaDTO | any = {}
   form: FormGroup = new FormGroup({});
-  idMuestra: string | null = null;
   edit:boolean=false;
   new:boolean=true;
+  muestraId='1';
   constructor (
     private fb: FormBuilder,
     private granulometriaService: GranulometriaService,
@@ -39,17 +39,18 @@ export class EnsayoGranulometriaComponent {
               this.form.patchValue(JSON.parse(data.tamices))
               this.edit=true;
               this.values.tamices = this.form.value
-              this.values.muestra_id=id;
+              this.muestraId=id;
+              this.values.muestra_id=this.muestraId;
               this.new=false;
             }
           },
           error: (error) => {
-            console.error('Error al obtener solicitante:', error);
+            console.error('Error :', error);
           }
         });
       },
       error: (error) => {
-        console.error('Error al obtener solicitante:', error);
+        console.error('Error :', error);
       }
     });
   }
@@ -71,25 +72,31 @@ export class EnsayoGranulometriaComponent {
   onSubmit() {
     if (this.form.valid) {
       this.values.tamices = this.form.value
-      this.values.muestra_id=this.idMuestra;
+      this.values.muestra_id=this.muestraId;
       for (let propiedad in this.values.tamices) {
         if (this.values.tamices[propiedad] === null) {
            this.values.tamices[propiedad] = 0;
         }
       }
       if(this.new){
-      this.granulometriaService.create(this.values).subscribe({
-        next: (data) => {
-          this.edit=true
-        },
-        error: (error) => {
-          console.error('Error al obtener solicitante:', error);
-        }
-      });
+        this.granulometriaService.create(this.values).subscribe({
+          next: () => {
+            this.edit=true
+          },
+          error: (error) => {
+            console.error('Error :', error);
+          }
+        });
       } else {
-        console.log(this.values)
+        this.granulometriaService.update(this.values).subscribe({
+          next: () => {
+            this.edit=true
+          },
+          error: (error) => {
+            console.error('Error :', error);
+          }
+        });
       }
-    this.edit=true;
     } else {
       this.form.markAllAsTouched()
     }

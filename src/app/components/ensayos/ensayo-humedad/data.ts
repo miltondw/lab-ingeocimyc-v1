@@ -6,7 +6,7 @@ interface PeriodicElement {
 export const ELEMENT_DATA: PeriodicElement[] = [
   {
     prueba: 'Profundidad',
-    primera:'depthM'
+    primera:'depth'
   },
   {
     prueba: 'Peso del tara (P1)',

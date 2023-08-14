@@ -20,6 +20,17 @@ export class GranulometriaService {
   }
 
   create(granulometriaDto: IEnsayoGranulometriaDTO): Observable<IGranulometria> {
+    const granulometria=this.granulometriOperation(granulometriaDto)
+
+    return this.http.post<IGranulometria>(this.apiUrl, granulometria);
+  }
+
+  update(granulometriaDto: IEnsayoGranulometriaDTO): Observable<IGranulometria> {
+    const granulometria=this.granulometriOperation(granulometriaDto)
+    return this.http.put<IGranulometria>(this.apiUrl, granulometria);
+  }
+
+  granulometriOperation(granulometriaDto: IEnsayoGranulometriaDTO){
     const tamices: number[] = Object.values(granulometriaDto.tamices)
     const total = tamices.reduce((dc: number, va: number) => dc + va, 0)
     const retenido = tamices.map((tamice) => {
@@ -52,6 +63,7 @@ export class GranulometriaService {
     granulometria.retenido = retenido;
     granulometria.sucs_data = "";
     granulometria.total = total;
-    return this.http.post<IGranulometria>(this.apiUrl, granulometria);
+    return granulometria;
   }
+
 }

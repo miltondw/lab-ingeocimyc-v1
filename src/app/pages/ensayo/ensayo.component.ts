@@ -32,7 +32,7 @@ export class EnsayoComponent {
               id && this.routerStateService.setMuestraProject(id);
             },
             error: (error) => {
-              console.error('Error al obtener solicitante:', error);
+              console.error('Error :', error);
             }
           });
         }

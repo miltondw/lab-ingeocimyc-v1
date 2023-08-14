@@ -11,7 +11,7 @@ export class HumedadService {
 
   constructor (private http: HttpClient) { }
 
-  get(idMuestra: number): Observable<IHumedad> {
+  get(idMuestra: string): Observable<IHumedad> {
     return this.http.get<IHumedad>(
       `${this.apiUrl}?&muestraId=${idMuestra}`
     );
@@ -19,5 +19,9 @@ export class HumedadService {
 
   create(humedadDto: IHumedadDto): Observable<IHumedad> {
     return this.http.post<IHumedad>(this.apiUrl, humedadDto);
+  }
+
+  update(humedadDto: IHumedadDto): Observable<IHumedad> {
+    return this.http.put<IHumedad>(this.apiUrl, humedadDto);
   }
 }

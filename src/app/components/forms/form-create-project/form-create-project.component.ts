@@ -61,7 +61,7 @@ this.searchSubject.pipe(debounceTime(300)).subscribe(value => {
         this.selectedSolicitante=data[0].id;
       },
       error: (error) => {
-        console.error('Error al obtener solicitante:', error);
+        console.error('Error :', error);
       }
     });
   }
